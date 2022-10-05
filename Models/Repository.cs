@@ -45,6 +45,22 @@
             return myWeather;
         }
 
+        public static List<Weather> LastTen()
+        {
+            List<Weather> weatherList = new List<Weather>();
+
+            if(Weathers.Count<10)
+            {
+                weatherList = Weathers;
+            }
+            else
+            {
+                for (int i = (Weathers.Count-10); i < Weathers.Count; i++)
+                    weatherList.Add(Weathers[i]);
+            }
+            return weatherList;
+        }
+
 
     }
 }

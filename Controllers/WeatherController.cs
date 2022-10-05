@@ -21,7 +21,9 @@ namespace WeatherApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                return View("WeatherAdded", newWeather);
+                Repository.AddWeather(newWeather);
+                List<Weather> list = Repository.LastTen();
+                return View("WeatherAdded", list);
             }
             else 
                 return View();
