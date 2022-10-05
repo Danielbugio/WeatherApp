@@ -1,0 +1,27 @@
+﻿@model Weather
+
+@{
+    ViewBag.Title = "Added Weather";
+}
+
+
+<div class="card bottom-buffer">
+    <div class="card-body">
+        <table class="table table striped">
+            <tr>
+                <th>City</th>
+                <th>Temperature</th>
+                <th>Date</th>
+            </tr>
+            <tr>
+                <td>@Model.City</td>
+                <td>@Model.Temperature</td>
+                <td>@Model.Date</td>
+                
+            </tr>
+
+        </table>
+    </div>
+</div>
+
+<a asp-controller="Weather" asp-action="InsertWeather" class="btn btn-primary"><i class="bi bi-plus"></i> Insert Weather</a>
