@@ -15,7 +15,7 @@ namespace WeatherApp.Models
         public double Temperature { get; set; }
 
         [Required(ErrorMessage = "Please insert Date")]
-        [Column(TypeName = "Date")]
+        //[Column(TypeName = "Date")]
         //[DataType(DataType.Date)]
         //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public string Date { get; set; }

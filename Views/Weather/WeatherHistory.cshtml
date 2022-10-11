@@ -1,0 +1,46 @@
+﻿@model Weather
+
+@{
+    ViewBag.Title = "Weather History";
+}
+
+<h2>Select the City and the Star Date and the End Date to retrive de average temperature</h2>
+
+<div class="w-50">
+    <form asp-action="WeatherHistory" method="post">
+        <div asp-validation-summary="All"></div>
+
+<div class="mb-3">
+    <label asp-for="City" class="form-label">City:</label>
+    <select asp-for="City" class="form-select" name="city">
+        <option value="Porto">Porto</option>
+        <option value="Lisboa">Lisboa</option>
+        <option value="Faro">Faro</option>
+        <option value="Açores">Açores</option>
+        <option value="Madeira">Madeira</option>
+    </select>
+</div>
+
+<div class="mb-3">
+
+    <label asp-for="Date">First Date:</label>
+    <input asp-for="Date" type="date" name="Date1">
+    </div>
+
+
+
+
+        <div class="mb-3">
+
+            <label asp-for="Date">End Date:</label>
+            <input asp-for="Date" type="date" name="Date2">
+
+
+        </div>
+
+
+
+<div><button type="submit">Submit</button></div>
+
+</form>
+</div>

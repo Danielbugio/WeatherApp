@@ -1,0 +1,45 @@
+﻿@model List<Weather>
+
+@{
+    ViewBag.Title = "Added Weather Error";
+}
+<h3> The chosen city and date is already registered, if you want to change it, use the update option.</h3>
+
+@if (Model.Count == 0)
+{
+    <div class="card bg-info bottom-buffer">
+        <h3 class="text-center"> No Recordss</h3>
+    </div>
+}
+else
+{
+    <div class="card bg-info bottom-buffer">
+        <h3>Last Records:</h3>
+    </div>
+
+    foreach (Weather weather in Model)
+    {
+
+
+        <div class="card bottom-buffer">
+            <div class="card-body">
+                <table class="table table striped">
+                    <tr>
+                        <th>City</th>
+                        <th>Temperature</th>
+                        <th>Date</th>
+                    </tr>
+                    <tr>
+                        <td>@weather.City</td>
+                        <td>@weather.Temperature</td>
+                        <td>@weather.Date</td>
+
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    }
+}
+
+<a asp-controller="Weather" asp-action="InsertWeather" class="btn btn-primary"><i class="bi bi-plus"></i> Insert Weather</a>
