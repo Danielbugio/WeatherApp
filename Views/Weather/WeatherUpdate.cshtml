@@ -9,7 +9,7 @@
 
 
 <div class="w-50">
-    <form asp-action="InsertWeather" method="post">
+    <form asp-action="WeatherUpdate" method="post">
         <div asp-validation-summary="All"></div>
 
         <div class="mb-3">
@@ -36,7 +36,7 @@
             <label asp-for="Temperature" class="form-label">Temperature:</label>
             <input asp-for="Temperature" class="form-control">
         </div>
-        <div><button type="submit">Add Weather</button></div>
+        <div><button type="submit">Update Weather</button></div>
 
 
 
