@@ -14,8 +14,6 @@ namespace WeatherApp.Models
             }
         }
 
-
-        
         public static bool AddWeather(Weather newWeather)
         {
             WeatherDbContext context = new WeatherDbContext();
@@ -44,15 +42,23 @@ namespace WeatherApp.Models
             context.SaveChanges();
         }
 
-        public static Weather AlterarWeather(Weather myWeather)
+        public static Weather? UpdaterWeather(Weather myWeather)
         {
             WeatherDbContext context = new WeatherDbContext();
+            foreach(Weather weather in Weathers)
+            {
+                if (weather.Date == myWeather.Date && weather.City == myWeather.City)
+                {
+                    context.Weathers.Update(myWeather);
 
-            context.Weathers.Update(myWeather);
+                    context.SaveChanges();
 
-            context.SaveChanges();
+                    return myWeather;
+                }
+            }
+            
 
-            return myWeather;
+            return null;
         }
 
         public static List<Weather> LastTen()
@@ -65,13 +71,15 @@ namespace WeatherApp.Models
             }
             else
             {
-                for (int i = (Weathers.Count-10); i < Weathers.Count; i++)
+                for (int i = (Weathers.Count-1); i >= Weathers.Count - 10; i--)
+                {
                     weatherList.Add(Weathers[i]);
+                }
             }
             return weatherList;
         }
 
-        public static double Average(string StartDate, string EndDate)
+        public static double Average(string StartDate, string EndDate, string city)
         {
             DateTime firstDate = Convert.ToDateTime(StartDate);
             DateTime lastDate = Convert.ToDateTime(EndDate);
@@ -85,7 +93,7 @@ namespace WeatherApp.Models
 
             foreach ( Weather weather in weathers )
             {
-                if (Convert.ToDateTime(weather.Date) >= firstDate && Convert.ToDateTime(weather.Date)<=lastDate)
+                if (Convert.ToDateTime(weather.Date) >= firstDate && Convert.ToDateTime(weather.Date)<= lastDate && weather.City == city)
                 {
                    
                     total = total + weather.Temperature;
@@ -96,6 +104,50 @@ namespace WeatherApp.Models
             }           
 
             return average;
+        }
+
+        public static double MinWeather(string StartDate, string EndDate, string city)
+        { 
+            DateTime firstDate = Convert.ToDateTime(StartDate);
+            DateTime lastDate = Convert.ToDateTime(EndDate);
+            double minWeather = 500;
+
+            WeatherDbContext context = new WeatherDbContext();
+            List<Weather> weathers = context.Weathers.ToList();
+                        
+            foreach (Weather weather in weathers)
+            {
+                if (Convert.ToDateTime(weather.Date) >= firstDate && Convert.ToDateTime(weather.Date) <= lastDate && weather.Temperature< minWeather && weather.City == city)
+                {
+
+                    minWeather = weather.Temperature;
+
+                }
+            }
+
+            return minWeather;
+        }
+
+        public static double MaxWeather(string StartDate, string EndDate, string city)
+        {
+            DateTime firstDate = Convert.ToDateTime(StartDate);
+            DateTime lastDate = Convert.ToDateTime(EndDate);
+            double maxWeather = -500;
+
+            WeatherDbContext context = new WeatherDbContext();
+            List<Weather> weathers = context.Weathers.ToList();
+
+            foreach (Weather weather in weathers)
+            {
+                if (Convert.ToDateTime(weather.Date) >= firstDate && Convert.ToDateTime(weather.Date) <= lastDate && weather.Temperature > maxWeather && weather.City==city)
+                {
+
+                    maxWeather = weather.Temperature;
+
+                }
+            }
+
+            return maxWeather;
         }
 
         public static List<Weather> WeatherHistory(string StartDate, string EndDate, string city)
@@ -121,6 +173,8 @@ namespace WeatherApp.Models
             return weathersHistory;
 
         }
+
+        
 
 
     }

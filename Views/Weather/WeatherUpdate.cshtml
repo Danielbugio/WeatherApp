@@ -1,0 +1,44 @@
+﻿@model Weather
+
+@{
+    ViewBag.Title = "Insert Weather";
+}
+
+<h2 class="marginBottom30">Select One Option</h2>
+
+
+
+<div class="w-50">
+    <form asp-action="WeatherUpdate" method="post">
+        <div asp-validation-summary="All"></div>
+
+        <div class="mb-3">
+            <label asp-for="City" class="form-label">City:</label>
+            <select asp-for="City" class="form-select">
+                <option value="Porto">Porto</option>
+                <option value="Lisboa">Lisboa</option>
+                <option value="Faro">Faro</option>
+                <option value="Açores">Açores</option>
+                <option value="Madeira">Madeira</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+
+            <label asp-for="Date">Date:</label>
+            <input asp-for="Date" type="date" name="Date">
+
+
+        </div>
+
+        <div asp-validation="Temperature"></div>
+        <div class="mb-3">
+            <label asp-for="Temperature" class="form-label">Temperature:</label>
+            <input asp-for="Temperature" class="form-control">
+        </div>
+        <div><button type="submit">Update Weather</button></div>
+
+
+
+    </form>
+</div>

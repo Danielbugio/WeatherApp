@@ -1,0 +1,28 @@
+﻿@model Weather
+
+@{
+    ViewBag.Title = "Insert Weather";
+}
+
+<h2 class="marginBottom30">@ViewBag.result</h2>
+
+
+    <div class="card bottom-buffer">
+        <div class="card-body">
+            <table class="table table striped">
+                <tr>
+                    <th>City</th>
+                    <th>Temperature</th>
+                    <th>Date</th>
+                </tr>
+                <tr>
+                    <td>@Model.City</td>
+                    <td>@Model.Temperature</td>
+                    <td>@Model.Date</td>
+                
+                </tr>
+
+            </table>
+        </div>
+    </div>
+

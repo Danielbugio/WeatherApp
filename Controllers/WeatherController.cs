@@ -28,16 +28,16 @@ namespace WeatherApp.Controllers
                     return View("WeatherAdded", list1);
 
                 }
-                return View("WeatherAddedError",list);
+                return View("WeatherAddedError", list);
             }
-            else 
+            else
                 return View();
         }
 
         [HttpGet]
         public IActionResult WeatherHistory()
         {
-            
+
 
             return View();
         }
@@ -45,39 +45,62 @@ namespace WeatherApp.Controllers
         [HttpPost]
         public IActionResult WeatherHistory(string Date1, string Date2, string city)
         {
-            List<Weather> list = Repository.WeatherHistory(Date1,Date2, city);
+            List<Weather> list = Repository.WeatherHistory(Date1, Date2, city);
 
             return View("WeatherHistoryResult", list);
+        }
+
+        [HttpGet]
+        public IActionResult AverageWeather()
+        {
+            return View("AverageWeatherSelect");
+        }
+
+        //[HttpPost]
+        public IActionResult DeleteWeather(int ID)
+        {
+            Repository.DeleteWeather(ID);
+            return View("WeatherDeleted");
         }
 
         [HttpPost]
         public IActionResult AverageWeather(string Date1, string Date2, string city)
         {
-            double average = Repository.Average(Date1, Date2);
+            double average = Repository.Average(Date1, Date2, city);
             string result = Convert.ToString(average);
 
-            if (city == "Porto")
+            WeatherData weatherData = new WeatherData();
+
+            weatherData.City = city;
+            weatherData.InitialDate = Date1;
+            weatherData.EndDate = Date2;
+            weatherData.WeatherMin = Repository.MinWeather(Date1, Date2, city);
+            weatherData.WeatherMax = Repository.MaxWeather(Date1, Date2, city);
+            weatherData.WeatherAverage = average;
+
+            return View("AverageWeather", weatherData);
+
+        }
+
+        [HttpGet]
+        public IActionResult WeatherUpdate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult WeatherUpdate(Weather weatherData)
+        {
+            ViewBag.result = "Temperature Updated";
+            if(Repository.UpdaterWeather(weatherData)==null)
             {
-                return View("AveragePorto", ViewBag.Average = result);
-            }
-            if (city == "lisboa")
-            {
-                return View("AverageLisboa", ViewBag.Average = result);
-            }
-            if (city == "Faro")
-            {
-                return View("AverageFaro", ViewBag.Average = result);
-            }
-            if (city == "Açores")
-            {
-                return View("AverageAçores", ViewBag.Average = result);
+                ViewBag.result = "The temperature has not been updated, there are no records yet for the selected date and city.";
+                return View("WeatherUpdated", weatherData);
             }
             else 
             {
-                return View("AverageMadeira", ViewBag.Average = result);
+                return View("WeatherUpdated", weatherData);
             }
-
-
         }
 
 
