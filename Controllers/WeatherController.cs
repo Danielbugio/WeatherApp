@@ -50,32 +50,56 @@ namespace WeatherApp.Controllers
             return View("WeatherHistoryResult", list);
         }
 
+        [HttpGet]
+        public IActionResult AverageWeather()
+        {
+            return View("AverageWeatherSelect");
+        }
+
+        //[HttpPost]
+        public IActionResult DeleteWeather(int ID)
+        {
+            Repository.DeleteWeather(ID);
+            return View("WeatherDeleted");
+        }
+
         [HttpPost]
         public IActionResult AverageWeather(string Date1, string Date2, string city)
         {
-            double average = Repository.Average(Date1, Date2);
+            double average = Repository.Average(Date1, Date2,city);
             string result = Convert.ToString(average);
 
-            if (city == "Porto")
-            {
-                return View("AveragePorto", ViewBag.Average = result);
-            }
-            if (city == "lisboa")
-            {
-                return View("AverageLisboa", ViewBag.Average = result);
-            }
-            if (city == "Faro")
-            {
-                return View("AverageFaro", ViewBag.Average = result);
-            }
-            if (city == "Açores")
-            {
-                return View("AverageAçores", ViewBag.Average = result);
-            }
-            else 
-            {
-                return View("AverageMadeira", ViewBag.Average = result);
-            }
+            WeatherData weatherData = new WeatherData();
+
+            weatherData.City = city;
+            weatherData.InitialDate=Date1;
+            weatherData.EndDate=Date2;
+            weatherData.WeatherMin = Repository.MinWeather(Date1,Date2, city);
+            weatherData.WeatherMax = Repository.MaxWeather(Date1, Date2, city);
+            weatherData.WeatherAverage = average;
+
+            return View("AverageWeather", weatherData);
+
+            //if (city == "Porto")
+            //{
+            //    return View("AveragePorto", ViewBag.Average = result);
+            //}
+            //if (city == "lisboa")
+            //{
+            //    return View("AverageLisboa", ViewBag.Average = result);
+            //}
+            //if (city == "Faro")
+            //{
+            //    return View("AverageFaro", ViewBag.Average = result);
+            //}
+            //if (city == "Açores")
+            //{
+            //    return View("AverageAçores", ViewBag.Average = result);
+            //}
+            //else 
+            //{
+            //    return View("AverageMadeira", ViewBag.Average = result);
+            //}
 
 
         }

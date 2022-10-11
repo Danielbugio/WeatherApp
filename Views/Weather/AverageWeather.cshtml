@@ -1,0 +1,29 @@
+﻿@model WeatherData
+
+@{
+    ViewBag.Title = "Average Weather";
+}
+<h2 class="mb-3">Average Temperature in @Model.City is </h2>
+
+<div class="card bottom-buffer">
+<div class="card-body">
+    <table class="table table striped">
+        <tr>
+            <th>Initial Date</th>
+            <th>End Date</th>
+            <th>Max temperature</th>
+            <th>Min temperature</th>
+            <th>Average Temperature</th>
+        </tr>
+        <tr>
+            <td>@Model.InitialDate</td>
+            <td>@Model.EndDate</td>
+            <td>@Model.WeatherMax</td>
+            <td>@Model.WeatherMin</td>
+            <td>@Model.WeatherAverage</td>
+
+        </tr>
+
+    </table>
+</div>
+    </div>

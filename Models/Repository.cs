@@ -71,7 +71,7 @@ namespace WeatherApp.Models
             return weatherList;
         }
 
-        public static double Average(string StartDate, string EndDate)
+        public static double Average(string StartDate, string EndDate, string city)
         {
             DateTime firstDate = Convert.ToDateTime(StartDate);
             DateTime lastDate = Convert.ToDateTime(EndDate);
@@ -85,7 +85,7 @@ namespace WeatherApp.Models
 
             foreach ( Weather weather in weathers )
             {
-                if (Convert.ToDateTime(weather.Date) >= firstDate && Convert.ToDateTime(weather.Date)<=lastDate)
+                if (Convert.ToDateTime(weather.Date) >= firstDate && Convert.ToDateTime(weather.Date)<= lastDate && weather.City == city)
                 {
                    
                     total = total + weather.Temperature;
@@ -96,6 +96,50 @@ namespace WeatherApp.Models
             }           
 
             return average;
+        }
+
+        public static double MinWeather(string StartDate, string EndDate, string city)
+        { 
+            DateTime firstDate = Convert.ToDateTime(StartDate);
+            DateTime lastDate = Convert.ToDateTime(EndDate);
+            double minWeather = 500;
+
+            WeatherDbContext context = new WeatherDbContext();
+            List<Weather> weathers = context.Weathers.ToList();
+                        
+            foreach (Weather weather in weathers)
+            {
+                if (Convert.ToDateTime(weather.Date) >= firstDate && Convert.ToDateTime(weather.Date) <= lastDate && weather.Temperature< minWeather && weather.City == city)
+                {
+
+                    minWeather = weather.Temperature;
+
+                }
+            }
+
+            return minWeather;
+        }
+
+        public static double MaxWeather(string StartDate, string EndDate, string city)
+        {
+            DateTime firstDate = Convert.ToDateTime(StartDate);
+            DateTime lastDate = Convert.ToDateTime(EndDate);
+            double maxWeather = -500;
+
+            WeatherDbContext context = new WeatherDbContext();
+            List<Weather> weathers = context.Weathers.ToList();
+
+            foreach (Weather weather in weathers)
+            {
+                if (Convert.ToDateTime(weather.Date) >= firstDate && Convert.ToDateTime(weather.Date) <= lastDate && weather.Temperature > maxWeather && weather.City==city)
+                {
+
+                    maxWeather = weather.Temperature;
+
+                }
+            }
+
+            return maxWeather;
         }
 
         public static List<Weather> WeatherHistory(string StartDate, string EndDate, string city)

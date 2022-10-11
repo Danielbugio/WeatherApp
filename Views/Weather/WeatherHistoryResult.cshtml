@@ -16,8 +16,8 @@ else
     <div class="card bg-info bottom-buffer">
         <h3>Weather History Results:</h3>
     </div>
-
-    foreach (Weather weather in Model)
+    <form asp-action = "DeleteWeather" method = "post" >
+    @foreach (Weather weather in Model)
     {
 
 
@@ -28,11 +28,14 @@ else
                         <th>City</th>
                         <th>Temperature</th>
                         <th>Date</th>
+                        <th>Delete</th>
                     </tr>
                     <tr>
                         <td>@weather.City</td>
                         <td>@weather.Temperature</td>
                         <td>@weather.Date</td>
+                            <td><button type="submit" value="@weather.WeatherID" name="ID" title="Delete"><i class="bi bi-trash"></i></button></td>
+                        
 
                     </tr>
 
@@ -40,6 +43,8 @@ else
             </div>
         </div>
     }
+    </form>
 }
+
 
 <a asp-controller="Weather" asp-action="InsertWeather" class="btn btn-primary"><i class="bi bi-plus"></i> Insert Weather</a>
